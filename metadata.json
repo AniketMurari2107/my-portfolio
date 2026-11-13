@@ -1,0 +1,6 @@
+{
+  "name": "ANIKET 3D PORTFOLIO",
+  "description": "Interactive 3D developer portfolio by Aniket — drive a futuristic sports car through an open-world gaming universe to explore projects, skills, experience, and contact.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
