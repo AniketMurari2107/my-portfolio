@@ -324,7 +324,7 @@ export function GameHUD() {
             <Settings className="h-4 w-4 text-blue-400" />
             <span className="hidden sm:inline">Settings</span>
           </button>
-
+oq
           <button
             type="button"
             tabIndex={-1}

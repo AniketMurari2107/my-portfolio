@@ -6,7 +6,7 @@ import { defineConfig } from 'vite';
 
 export default defineConfig(() => {
   return {
-    base: '/aniket-3d-portfolio/',
+    base: '/my-portfolio/',
 
     plugins: [react(), tailwindcss()],
 
