@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import {
   Clock,
-  CloudFog,
   Flag,
   Gem,
   Maximize2,
@@ -10,7 +9,6 @@ import {
   Pause,
   Settings,
   Sparkles,
-  Sun,
   Volume2,
   VolumeX,
 } from 'lucide-react';
@@ -19,7 +17,6 @@ import { Minimap } from './Minimap.jsx';
 import { PORTFOLIO_ZONES } from '../game/worldZones.js';
 import { CHECKPOINTS, EASTER_EGGS, ENERGY_CRYSTALS } from '../game/worldGameplayData.js';
 import { shouldShowTouchControls } from '../game/graphicsConfig.js';
-import { getWeatherConfig } from '../game/weatherConfig.js';
 import { formatClockTime, getTimePhaseLabel } from '../game/timeOfDay.js';
 import { audioEngine } from '../game/audioEngine.js';
 
@@ -39,7 +36,6 @@ export function GameHUD() {
   const nitroCooldown = useGameStore((s) => s.nitroCooldown);
   const isBoosting = useGameStore((s) => s.isBoosting);
   const settings = useGameStore((s) => s.settings);
-  const weather = useGameStore((s) => s.weather);
   const timeOfDay = useGameStore((s) => s.timeOfDay);
   const score = useGameStore((s) => s.score);
   const checkpointsCleared = useGameStore((s) => s.checkpointsCleared);
@@ -47,11 +43,9 @@ export function GameHUD() {
   const discoveredEggs = useGameStore((s) => s.discoveredEggs);
 
   const toggleSound = useGameStore((s) => s.toggleSound);
-  const cycleWeather = useGameStore((s) => s.cycleWeather);
   const toggleSettings = useGameStore((s) => s.toggleSettings);
   const togglePause = useGameStore((s) => s.togglePause);
   const openSection = useGameStore((s) => s.openSection);
-  const weatherCfg = getWeatherConfig(weather);
   const timePhaseLabel = getTimePhaseLabel(timeOfDay);
   const clockStr = formatClockTime(timeOfDay);
 
@@ -221,31 +215,7 @@ export function GameHUD() {
             </div>
           )}
 
-          {/* Subtle Quick-Inspect Bar for Desktop Users */}
-          <nav
-            aria-label="Portfolio sections"
-            className="hidden lg:flex items-center gap-1 hud-surface rounded-lg px-2 py-1"
-          >
-            {PORTFOLIO_ZONES.map((zone) => (
-              <button
-                key={zone.id}
-                type="button"
-                tabIndex={-1}
-                onClick={(e) => {
-                  e.currentTarget.blur();
-                  audioEngine.playInteract();
-                  openSection(zone.id);
-                }}
-                className={`rounded-md px-2.5 py-1 text-xs font-medium transition-all whitespace-nowrap ${
-                  activeSection === zone.id
-                    ? 'bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-semibold shadow-[0_0_12px_rgba(6,182,212,0.4)]'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-800/80'
-                }`}
-              >
-                {zone.shortLabel}
-              </button>
-            ))}
-          </nav>
+
         </div>
 
         {/* Top-Right Utility Controls: Time, Weather, Sound, Settings, Fullscreen, Game Menu */}
@@ -267,28 +237,6 @@ export function GameHUD() {
             <span className="font-mono-tech tabular-nums">
               {timePhaseLabel} {clockStr}
             </span>
-          </button>
-
-          <button
-            type="button"
-            tabIndex={-1}
-            data-testid="hud-weather-toggle"
-            aria-label={`Weather: ${weatherCfg.label}. Click to cycle weather`}
-            title={`Weather: ${weatherCfg.label} (Press T)`}
-            onClick={(e) => {
-              e.currentTarget.blur();
-              audioEngine.unlock();
-              audioEngine.playButtonClick();
-              cycleWeather(true);
-            }}
-            className="hud-surface hud-interactive flex h-9 sm:h-10 items-center gap-1.5 sm:gap-2 rounded-xl px-2.5 sm:px-3 text-xs font-medium text-slate-200 hover:text-white whitespace-nowrap"
-          >
-            {weather === 'foggy' ? (
-              <CloudFog className="h-4 w-4 text-indigo-300" />
-            ) : (
-              <Sun className="h-4 w-4 text-cyan-300" />
-            )}
-            <span className="hidden sm:inline">{weatherCfg.label}</span>
           </button>
 
           <button
@@ -324,7 +272,7 @@ export function GameHUD() {
             <Settings className="h-4 w-4 text-blue-400" />
             <span className="hidden sm:inline">Settings</span>
           </button>
-oq
+
           <button
             type="button"
             tabIndex={-1}
@@ -444,8 +392,6 @@ oq
               <span>R: Reset</span>
               <span className="text-slate-600" aria-hidden="true">|</span>
               <span>Drag / C: Camera</span>
-              <span className="text-slate-600" aria-hidden="true">|</span>
-              <span>T: Weather</span>
               <span className="text-slate-600" aria-hidden="true">|</span>
               <span>ESC: Menu</span>
             </div>

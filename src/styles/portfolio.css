@@ -6,8 +6,8 @@
   --color-primary: #3b82f6;
   --color-secondary: #8b5cf6;
   --color-accent: #06b6d4;
-  --border-hud: rgba(59, 130, 246, 0.34);
-  --border-glow: rgba(6, 182, 212, 0.55);
+  --border-hud: rgba(255, 255, 255, 0.10);
+  --border-glow: rgba(255, 255, 255, 0.22);
 }
 
 html,
@@ -41,44 +41,58 @@ canvas {
   font-variant-numeric: tabular-nums;
 }
 
-/* Layered dark glassmorphism without backdrop-filter WebGL stalls */
+/* 1. Dark Glassmorphism:
+   Semi-transparent dark background (bg-neutral-950/60),
+   backdrop-blur-md, and 1px thin frosted border (border-white/10) */
 .hud-surface {
-  background: linear-gradient(155deg, rgba(10, 16, 36, 0.92) 0%, rgba(4, 7, 18, 0.88) 100%);
-  border: 1px solid var(--border-hud);
+  background-color: rgba(10, 10, 10, 0.60);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 0 18px rgba(59, 130, 246, 0.14),
-    0 12px 32px rgba(2, 4, 12, 0.72);
+    0 8px 32px 0 rgba(0, 0, 0, 0.38);
   transition:
     border-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 180ms ease,
     transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hud-interactive:hover {
-  border-color: var(--border-glow);
+  background-color: rgba(18, 18, 18, 0.72);
+  border-color: rgba(255, 255, 255, 0.22);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    0 0 22px rgba(6, 182, 212, 0.28),
-    0 14px 34px rgba(2, 4, 12, 0.78);
+    0 8px 32px 0 rgba(0, 0, 0, 0.45),
+    0 0 16px rgba(255, 255, 255, 0.06);
 }
 
 .panel-surface {
-  background: linear-gradient(160deg, rgba(11, 18, 40, 0.97) 0%, rgba(4, 7, 18, 0.95) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.38);
+  background-color: rgba(10, 10, 10, 0.60);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.09),
-    0 0 36px rgba(59, 130, 246, 0.16),
-    0 28px 72px rgba(2, 4, 12, 0.88);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 24px 64px -12px rgba(0, 0, 0, 0.75);
+}
+
+.dark-glass {
+  background-color: rgba(10, 10, 10, 0.60);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
 }
 
 .menu-glass-card {
-  background: linear-gradient(145deg, rgba(6, 10, 24, 0.92) 0%, rgba(3, 5, 13, 0.86) 65%, rgba(12, 18, 42, 0.78) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.34);
+  background-color: rgba(10, 10, 10, 0.60);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.09),
-    0 0 42px rgba(59, 130, 246, 0.18),
-    0 24px 64px rgba(2, 4, 12, 0.84);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 24px 64px rgba(0, 0, 0, 0.75);
 }
 
 /* Animated next-gen racing CTA button with compositor-only sheen */
@@ -127,9 +141,11 @@ canvas {
 .btn-racing-glass {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(150deg, rgba(15, 23, 42, 0.88) 0%, rgba(9, 14, 30, 0.92) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.38);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background-color: rgba(10, 10, 10, 0.60);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   transition:
     transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
     border-color 180ms ease,
@@ -139,10 +155,11 @@ canvas {
 
 .btn-racing-glass:hover {
   transform: translateY(-1px);
-  border-color: rgba(34, 211, 238, 0.7);
+  background-color: rgba(23, 23, 23, 0.75);
+  border-color: rgba(255, 255, 255, 0.22);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 0 22px rgba(59, 130, 246, 0.28);
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 6px 20px rgba(0, 0, 0, 0.45);
 }
 
 .btn-racing-glass:active {
@@ -159,16 +176,16 @@ canvas {
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(10, 10, 10, 0.4);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(56, 189, 248, 0.38);
+  background: rgba(255, 255, 255, 0.18);
   border-radius: 9999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(56, 189, 248, 0.65);
+  background: rgba(255, 255, 255, 0.32);
 }
 
 @media (prefers-reduced-motion: reduce) {

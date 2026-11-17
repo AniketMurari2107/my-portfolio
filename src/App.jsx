@@ -1,4 +1,4 @@
-import { Component, Suspense, lazy } from 'react';
+import { Component, Suspense, lazy, useEffect, useRef } from 'react';
 import { useKeyboard } from './hooks/useKeyboard.js';
 import { useGameStore } from './store/gameStore.js';
 import { GameWorld } from './game/GameWorld.jsx';
@@ -9,6 +9,7 @@ import { SpeedLinesOverlay } from './components/SpeedLinesOverlay.jsx';
 import { HudNotifications } from './components/HudNotifications.jsx';
 import { GameHUD } from './components/GameHUD.jsx';
 import { GameMenuModal } from './components/GameMenuModal.jsx';
+import { audioEngine } from './game/audioEngine.js';
 
 const SettingsPanel = lazy(() => import('./components/SettingsPanel.jsx'));
 const InteractionPanel = lazy(() => import('./components/InteractionPanel.jsx'));
@@ -29,7 +30,7 @@ class WorldErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#050814] p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-6">
           <div className="panel-surface max-w-md rounded-2xl p-6 text-center space-y-4">
             <h2 className="font-display text-2xl font-bold text-white">
               3D Graphics Unavailable
@@ -55,6 +56,27 @@ export default function App() {
   const webglError = useGameStore((s) => s.webglError);
   const settingsOpen = useGameStore((s) => s.settingsOpen);
   const activeSection = useGameStore((s) => s.activeSection);
+  const nearbyZone = useGameStore((s) => s.nearbyZone);
+  const gamePhase = useGameStore((s) => s.gamePhase);
+  const openSection = useGameStore((s) => s.openSection);
+  const lastZoneRef = useRef(null);
+
+  // Automatically open the section when approaching its 3D landmark
+  useEffect(() => {
+    if (gamePhase !== 'playing') {
+      lastZoneRef.current = null;
+      return;
+    }
+
+    if (nearbyZone && nearbyZone.id !== lastZoneRef.current) {
+      lastZoneRef.current = nearbyZone.id;
+      audioEngine.unlock();
+      audioEngine.playInteract();
+      openSection(nearbyZone.id);
+    } else if (!nearbyZone) {
+      lastZoneRef.current = null;
+    }
+  }, [nearbyZone, gamePhase, openSection]);
 
   return (
     <main className="relative h-screen w-screen overflow-hidden bg-[#050814] touch-none select-none">
@@ -65,7 +87,7 @@ export default function App() {
       {webglError && (
         <div
           role="alert"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#050814]/95 p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-6"
         >
           <div className="panel-surface max-w-md rounded-2xl p-6 text-center space-y-4">
             <h2 className="font-display text-xl font-bold text-white">

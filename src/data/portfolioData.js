@@ -254,14 +254,19 @@ export const ACHIEVEMENTS_DATA = {
   ],
 };
 
-// Editable Contact Configuration — do not invent URLs; leave unconfigured links blank until set
+// Editable Contact Configuration — Social handles & direct email
 export const CONTACT_DATA = {
   name: 'Aniket',
   role: 'Aspiring Software Developer',
   email: 'aniketmurari66@gmail.com',
-  githubUrl: '',   // Configurable: e.g. 'https://github.com/your-username'
-  githubLabel: 'GitHub Profile (Configurable)',
-  linkedinUrl: '', // Configurable: e.g. 'https://linkedin.com/in/your-handle'
-  linkedinLabel: 'LinkedIn Profile (Configurable)',
+  githubUrl: 'https://github.com/AniketMurari2107',
+  githubHandle: 'AniketMurari2107',
+  githubLabel: 'github.com/AniketMurari2107',
+  linkedinUrl: 'https://www.linkedin.com/in/aniket-murari-40535137a',
+  linkedinHandle: 'aniket-murari-40535137a',
+  linkedinLabel: 'linkedin.com/in/aniket-murari-40535137a',
+  instagramUrl: 'https://instagram.com/aniketmurari',
+  instagramHandle: '@aniketmurari',
+  instagramLabel: 'instagram.com/aniketmurari',
   availability: 'Open to Software Developer, Frontend & Interactive 3D Opportunities',
 };

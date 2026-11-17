@@ -156,40 +156,19 @@ export function Minimap() {
         <span className="font-mono-tech text-[10px] tracking-wider text-slate-400 uppercase">
           Island Radar
         </span>
-        <span className="font-mono-tech text-[10px] text-cyan-400 tabular-nums">
-          {visitedZones.length}/{PORTFOLIO_ZONES.length}
-        </span>
+        {PORTFOLIO_ZONES.length > 0 && (
+          <span className="font-mono-tech text-[10px] text-cyan-400 tabular-nums">
+            {visitedZones.length}/{PORTFOLIO_ZONES.length}
+          </span>
+        )}
       </div>
 
       <canvas
         ref={canvasRef}
         width={MAP_SIZE}
         height={MAP_SIZE}
-        className="rounded-lg border border-slate-800 block"
+        className="rounded-lg border border-white/10 block"
       />
-
-      <div className="grid grid-cols-6 gap-1">
-        {PORTFOLIO_ZONES.map((zone) => (
-          <button
-            key={zone.id}
-            type="button"
-            tabIndex={-1}
-            title={`Drive to ${zone.title}`}
-            onClick={(e) => {
-              e.currentTarget.blur();
-              audioEngine.playButtonClick();
-              teleportToZone(zone.id);
-            }}
-            className={`rounded py-1 text-[9px] font-medium transition-colors whitespace-nowrap ${
-              activeSection === zone.id
-                ? 'bg-cyan-400 text-slate-950 font-semibold'
-                : 'bg-slate-900/90 text-slate-300 hover:bg-slate-800 hover:text-white'
-            }`}
-          >
-            {zone.shortLabel.slice(0, 3)}
-          </button>
-        ))}
-      </div>
     </div>
   );
 }

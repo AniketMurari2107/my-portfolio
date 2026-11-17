@@ -48,8 +48,8 @@ export function Achievements() {
               key={ach.id}
               className={`rounded-xl border p-4 space-y-1.5 transition-colors ${
                 ach.unlocked
-                  ? 'border-amber-400/50 bg-amber-500/10'
-                  : 'border-slate-800 bg-slate-900/45'
+                  ? 'border-amber-400/50 bg-amber-500/10 backdrop-blur-md'
+                  : 'border-white/10 bg-neutral-950/60 backdrop-blur-md'
               }`}
             >
               <div className="flex items-center justify-between gap-2">
@@ -65,7 +65,7 @@ export function Achievements() {
                   className={`rounded px-2 py-0.5 text-[10px] font-mono-tech ${
                     ach.unlocked
                       ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/35'
-                      : 'bg-slate-800 text-slate-400'
+                      : 'bg-neutral-900 border border-white/10 text-slate-400'
                   }`}
                 >
                   {ach.unlocked ? 'UNLOCKED' : ach.progressLabel}
@@ -93,7 +93,7 @@ export function Achievements() {
           {completedProjects.map((item) => (
             <div
               key={item.title}
-              className="rounded-xl border border-slate-800 bg-slate-900/55 p-4 space-y-2"
+              className="rounded-xl border border-white/10 bg-neutral-950/60 backdrop-blur-md p-4 space-y-2"
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="font-display text-base font-semibold text-white">
@@ -121,7 +121,7 @@ export function Achievements() {
           {technologiesLearned.map((tech) => (
             <span
               key={tech}
-              className="rounded-lg border border-slate-700/80 bg-slate-900/75 px-3 py-1.5 text-xs font-medium text-cyan-200"
+              className="rounded-lg border border-white/10 bg-neutral-900/60 px-3 py-1.5 text-xs font-medium text-cyan-200"
             >
               {tech}
             </span>
@@ -142,7 +142,7 @@ export function Achievements() {
             {milestones.map((m) => (
               <div
                 key={m.title}
-                className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 space-y-1.5"
+                className="rounded-xl border border-white/10 bg-neutral-950/60 backdrop-blur-md p-4 space-y-1.5"
               >
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-medium text-sm text-slate-100">{m.title}</span>
@@ -166,7 +166,7 @@ export function Achievements() {
             {certifications.map((cert) => (
               <div
                 key={cert.title}
-                className="rounded-xl border border-slate-800 bg-slate-900/50 p-4 space-y-1.5"
+                className="rounded-xl border border-white/10 bg-neutral-950/60 backdrop-blur-md p-4 space-y-1.5"
               >
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-medium text-sm text-slate-100">{cert.title}</span>

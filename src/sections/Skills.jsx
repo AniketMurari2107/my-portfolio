@@ -32,7 +32,7 @@ export function Skills() {
           </h2>
         </div>
 
-        <div className="flex flex-wrap items-center gap-1 rounded-lg border border-slate-800 bg-slate-950 p-1">
+        <div className="flex flex-wrap items-center gap-1 rounded-lg border border-white/10 bg-neutral-950/60 backdrop-blur-md p-1">
           {CATEGORY_TABS.map((tab) => (
             <button
               key={tab.id}
@@ -54,7 +54,7 @@ export function Skills() {
         {filteredSkills.map((skill) => (
           <div
             key={skill.id}
-            className="rounded-xl border border-slate-800 bg-slate-900/55 p-4 space-y-2.5"
+            className="rounded-xl border border-white/10 bg-neutral-950/60 backdrop-blur-md p-4 space-y-2.5"
           >
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2.5">
@@ -70,7 +70,7 @@ export function Skills() {
                 {skill.level}%
               </span>
             </div>
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-800">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-neutral-900 border border-white/5">
               <div
                 className="h-full rounded-full transition-all duration-300"
                 style={{ width: `${skill.level}%`, backgroundColor: skill.color }}

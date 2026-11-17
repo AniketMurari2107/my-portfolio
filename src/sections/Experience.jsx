@@ -27,7 +27,7 @@ export function Experience() {
           </h2>
         </div>
 
-        <div className="flex flex-wrap items-center gap-1 rounded-lg border border-slate-800 bg-slate-950 p-1">
+        <div className="flex flex-wrap items-center gap-1 rounded-lg border border-white/10 bg-neutral-950/60 backdrop-blur-md p-1">
           {[
             { id: 'all', label: 'All' },
             { id: 'experience', label: 'Experience' },
@@ -54,7 +54,7 @@ export function Experience() {
         {items.map((item, idx) => (
           <div
             key={item.id}
-            className="rounded-xl border border-slate-800 bg-slate-900/55 p-5 space-y-2.5"
+            className="rounded-xl border border-white/10 bg-neutral-950/60 backdrop-blur-md p-5 space-y-2.5"
           >
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex flex-wrap items-center gap-2.5">

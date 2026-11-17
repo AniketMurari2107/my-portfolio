@@ -4,23 +4,20 @@ import { RotateCcw, X } from 'lucide-react';
 import { useGameStore } from '../store/gameStore.js';
 import { PORTFOLIO_ZONES } from '../game/worldZones.js';
 import { GRAPHICS_PRESETS } from '../game/graphicsConfig.js';
-import { getWeatherConfig, WEATHER_MODES } from '../game/weatherConfig.js';
 import { formatClockTime, getTimePhaseLabel, TIME_PRESETS } from '../game/timeOfDay.js';
 import { audioEngine } from '../game/audioEngine.js';
 
 /**
  * Functional Settings drawer/modal allowing live adjustments to audio,
- * graphics quality, weather condition, time of day, camera FOV, steering sensitivity, HUD visibility, and quick teleport.
+ * graphics quality, time of day, camera FOV, steering sensitivity, HUD visibility, and quick teleport.
  */
 export function SettingsPanel() {
   const settingsOpen = useGameStore((s) => s.settingsOpen);
   const settings = useGameStore((s) => s.settings);
-  const weather = useGameStore((s) => s.weather);
   const timeOfDay = useGameStore((s) => s.timeOfDay);
   const autoTimeCycle = useGameStore((s) => s.autoTimeCycle);
   const toggleSettings = useGameStore((s) => s.toggleSettings);
   const updateSettings = useGameStore((s) => s.updateSettings);
-  const setWeather = useGameStore((s) => s.setWeather);
   const setTimeOfDay = useGameStore((s) => s.setTimeOfDay);
   const toggleAutoTimeCycle = useGameStore((s) => s.toggleAutoTimeCycle);
   const resetCar = useGameStore((s) => s.resetCar);
@@ -45,7 +42,7 @@ export function SettingsPanel() {
 
   return (
     <div
-      className="fixed inset-0 z-40 flex items-center justify-center bg-[#030612]/80 p-4"
+      className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
       role="dialog"
       aria-modal="true"
       aria-label="Settings"
@@ -54,7 +51,7 @@ export function SettingsPanel() {
         ref={panelRef}
         className="panel-surface w-full max-w-lg rounded-2xl p-6 space-y-6 max-h-[90vh] overflow-y-auto custom-scrollbar"
       >
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div>
             <h2 className="font-display text-xl font-bold text-white">Control &amp; World Settings</h2>
             <p className="text-xs text-slate-400 mt-0.5">
@@ -68,7 +65,7 @@ export function SettingsPanel() {
               audioEngine.playButtonClick();
               toggleSettings();
             }}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-700 bg-slate-900 text-slate-300 hover:text-white hover:border-cyan-400/60 transition-colors"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-neutral-900/60 text-slate-300 hover:text-white hover:border-white/20 transition-colors"
           >
             <X className="h-4 w-4" />
           </button>
@@ -88,7 +85,7 @@ export function SettingsPanel() {
                 className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
                   settings.soundEnabled
                     ? 'bg-cyan-400 text-slate-950'
-                    : 'bg-slate-800 text-slate-400'
+                    : 'bg-neutral-900 border border-white/10 text-slate-400'
                 }`}
               >
                 {settings.soundEnabled ? 'Enabled' : 'Muted'}
@@ -123,7 +120,7 @@ export function SettingsPanel() {
                 {GRAPHICS_PRESETS[settings.graphicsQuality]?.subtitle || 'Adaptive Performance'}
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-1.5 rounded-xl border border-slate-800 bg-slate-950 p-1">
+            <div className="grid grid-cols-3 gap-1.5 rounded-xl border border-white/10 bg-neutral-950/60 backdrop-blur-md p-1">
               {['low', 'medium', 'high'].map((mode) => {
                 const preset = GRAPHICS_PRESETS[mode];
                 const active = settings.graphicsQuality === mode;
@@ -139,47 +136,6 @@ export function SettingsPanel() {
                     className={`rounded-lg px-2.5 py-2 text-center transition-colors ${
                       active
                         ? 'bg-blue-500 text-slate-950 font-semibold'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-900'
-                    }`}
-                  >
-                    <div className="text-xs font-semibold">{preset.label}</div>
-                    <div
-                      className={`text-[10px] leading-tight mt-0.5 ${
-                        active ? 'text-slate-900/80' : 'text-slate-500'
-                      }`}
-                    >
-                      {preset.subtitle}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Dynamic Weather Condition: Clear / Foggy */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="text-sm font-medium text-slate-200">Weather Condition</div>
-              <div className="text-[11px] text-slate-400">
-                {getWeatherConfig(weather).subtitle}
-              </div>
-            </div>
-            <div className="grid grid-cols-2 gap-1.5 rounded-xl border border-slate-800 bg-slate-950 p-1">
-              {WEATHER_MODES.map((mode) => {
-                const preset = getWeatherConfig(mode);
-                const active = weather === mode;
-                return (
-                  <button
-                    key={mode}
-                    type="button"
-                    data-testid={`weather-mode-${mode}`}
-                    onClick={() => {
-                      audioEngine.playButtonClick();
-                      setWeather(mode, false);
-                    }}
-                    className={`rounded-lg px-2.5 py-2 text-center transition-colors ${
-                      active
-                        ? 'bg-cyan-400 text-slate-950 font-semibold'
                         : 'text-slate-300 hover:text-white hover:bg-slate-900'
                     }`}
                   >
@@ -216,14 +172,14 @@ export function SettingsPanel() {
                 className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
                   autoTimeCycle
                     ? 'bg-amber-400 text-slate-950'
-                    : 'bg-slate-800 text-slate-300 hover:text-white'
+                    : 'bg-neutral-900 border border-white/10 text-slate-300 hover:text-white'
                 }`}
               >
                 Auto Cycle: {autoTimeCycle ? 'On' : 'Paused'}
               </button>
             </div>
 
-            <div className="grid grid-cols-4 gap-1.5 rounded-xl border border-slate-800 bg-slate-950 p-1">
+            <div className="grid grid-cols-3 gap-1.5 rounded-xl border border-white/10 bg-neutral-950/60 backdrop-blur-md p-1">
               {TIME_PRESETS.map((preset) => {
                 const dist = Math.min(
                   Math.abs(timeOfDay - preset.t),
@@ -278,7 +234,7 @@ export function SettingsPanel() {
               <div className="text-sm font-medium text-slate-200">Touch Controls</div>
               <div className="text-xs text-slate-400">Virtual joystick &amp; mobile pedals</div>
             </div>
-            <div className="flex items-center gap-1 rounded-lg border border-slate-800 bg-slate-950 p-1">
+            <div className="flex items-center gap-1 rounded-lg border border-white/10 bg-neutral-950/60 backdrop-blur-md p-1">
               {[
                 { id: 'auto', label: 'Auto' },
                 { id: 'always', label: 'On' },
@@ -353,7 +309,7 @@ export function SettingsPanel() {
               className={`rounded-xl border px-3 py-2 text-xs font-medium transition-colors ${
                 settings.showMinimap
                   ? 'border-cyan-400/50 bg-cyan-500/10 text-cyan-200'
-                  : 'border-slate-800 bg-slate-900 text-slate-400'
+                  : 'border-white/10 bg-neutral-950/60 backdrop-blur-md text-slate-400'
               }`}
             >
               Minimap: {settings.showMinimap ? 'Shown' : 'Hidden'}
@@ -367,7 +323,7 @@ export function SettingsPanel() {
               className={`rounded-xl border px-3 py-2 text-xs font-medium transition-colors ${
                 settings.showControlsHint
                   ? 'border-cyan-400/50 bg-cyan-500/10 text-cyan-200'
-                  : 'border-slate-800 bg-slate-900 text-slate-400'
+                  : 'border-white/10 bg-neutral-950/60 backdrop-blur-md text-slate-400'
               }`}
             >
               Controls Bar: {settings.showControlsHint ? 'Shown' : 'Hidden'}
@@ -375,7 +331,7 @@ export function SettingsPanel() {
           </div>
 
           {/* Quick Warp & Vehicle Reset */}
-          <div className="space-y-2.5 border-t border-slate-800 pt-4">
+          <div className="space-y-2.5 border-t border-white/10 pt-4">
             <div className="text-xs font-medium text-slate-400 uppercase tracking-wider">
               Quick Teleport &amp; Recovery
             </div>
@@ -388,7 +344,7 @@ export function SettingsPanel() {
                     audioEngine.playButtonClick();
                     teleportToZone(zone.id);
                   }}
-                  className="rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-cyan-400/60 transition-colors"
+                  className="rounded-lg border border-white/10 bg-neutral-900/60 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-white/20 transition-colors"
                 >
                   {zone.shortLabel}
                 </button>
@@ -399,7 +355,7 @@ export function SettingsPanel() {
                   audioEngine.playButtonClick();
                   resetCar();
                 }}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-slate-800 px-3 py-1.5 text-xs font-semibold text-cyan-300 hover:bg-slate-700 transition-colors"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-neutral-900/60 px-3 py-1.5 text-xs font-semibold text-cyan-300 hover:border-white/20 transition-colors"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 Reset Car
@@ -411,7 +367,7 @@ export function SettingsPanel() {
                   requestCameraReset();
                   toggleSettings();
                 }}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-slate-800 px-3 py-1.5 text-xs font-semibold text-blue-300 hover:bg-slate-700 transition-colors"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-neutral-900/60 px-3 py-1.5 text-xs font-semibold text-blue-300 hover:border-white/20 transition-colors"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 Reset Camera

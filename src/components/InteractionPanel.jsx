@@ -82,10 +82,11 @@ export function InteractionPanel() {
   };
 
   const isFromMenu = gamePhase === 'menu';
+  const currentZone = PORTFOLIO_ZONES.find((z) => z.id === activeSection);
 
   return (
     <div
-      className="fixed inset-0 z-40 flex items-center justify-center bg-[#03050c]/82 p-3 sm:p-6"
+      className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm p-3 sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-label={`Portfolio section: ${activeSection}`}
@@ -94,52 +95,31 @@ export function InteractionPanel() {
         ref={panelRef}
         className="panel-surface flex w-full max-w-4xl flex-col rounded-2xl max-h-[90vh] overflow-hidden"
       >
-        {/* Top 6-Location Switcher & Close Button */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/90 bg-slate-950/90 px-4 py-3 sm:px-6 shrink-0">
-          <div className="flex flex-wrap items-center gap-1">
-            {PORTFOLIO_ZONES.map((zone) => {
-              const active = zone.id === activeSection;
-              return (
-                <button
-                  key={zone.id}
-                  type="button"
-                  onClick={() => {
-                    audioEngine.playButtonClick();
-                    openSection(zone.id);
-                  }}
-                  className={`rounded-lg px-2.5 py-1.5 text-xs font-medium transition-all whitespace-nowrap ${
-                    active
-                      ? 'bg-gradient-to-r from-blue-500 to-cyan-400 text-white font-semibold shadow-[0_0_14px_rgba(6,182,212,0.4)]'
-                      : 'text-slate-400 hover:bg-slate-800/90 hover:text-white'
-                  }`}
-                >
-                  {zone.shortLabel}
-                </button>
-              );
-            })}
+        {/* Active Zone Header & Close Button */}
+        <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-neutral-950/40 backdrop-blur-md px-4 py-3 sm:px-6 shrink-0">
+          <div className="flex items-center gap-2.5">
+            <span
+              className="h-2.5 w-2.5 rounded-full animate-pulse"
+              style={{ backgroundColor: currentZone?.color || '#06b6d4' }}
+            />
+            <h2 className="font-display text-sm sm:text-base font-bold tracking-wide text-white uppercase">
+              {currentZone?.title || activeSection}
+            </h2>
+            <span className="hidden sm:inline-block rounded-md border border-white/10 bg-neutral-900/60 px-2 py-0.5 font-mono-tech text-[10px] text-cyan-300 uppercase">
+              {currentZone?.shortLabel || 'Zone'} Module
+            </span>
           </div>
 
           <div className="flex items-center gap-2">
-            {isFromMenu && (
-              <button
-                type="button"
-                onClick={() => {
-                  audioEngine.playButtonClick();
-                  const target = activeSection;
-                  closeSection();
-                  teleportToZone(target);
-                }}
-                className="btn-racing-primary rounded-lg px-3 py-1.5 text-xs font-semibold text-white whitespace-nowrap"
-              >
-                Drive Here
-              </button>
-            )}
             <button
               type="button"
               aria-label={isFromMenu ? 'Back to Menu' : 'Close panel and resume driving'}
               onClick={() => {
                 audioEngine.playButtonClick();
                 closeSection();
+                if (isFromMenu) {
+                  startGame();
+                }
               }}
               className="btn-racing-glass inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-200 hover:text-white whitespace-nowrap"
             >
@@ -152,7 +132,7 @@ export function InteractionPanel() {
         {/* Scrollable Panel Body */}
         <div ref={bodyRef} className="overflow-y-auto p-5 sm:p-8 custom-scrollbar">
           <Suspense fallback={<SectionLoadingFallback />}>
-            {activeSection === 'about' && <About onNavigateSection={openSection} />}
+            {activeSection === 'about' && <About />}
             {activeSection === 'skills' && <Skills />}
             {activeSection === 'projects' && (
               <Projects onCloseAndDrive={handleResumeOrJump} />

@@ -45,7 +45,7 @@ export function GameMenuModal() {
 
   return (
     <div
-      className="fixed inset-0 z-30 flex items-center justify-center bg-[#030612]/82 p-4 pointer-events-auto"
+      className="fixed inset-0 z-30 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 pointer-events-auto"
       role="dialog"
       aria-modal="true"
       aria-label="Game Menu"
@@ -54,7 +54,7 @@ export function GameMenuModal() {
         ref={cardRef}
         className="panel-surface w-full max-w-md rounded-2xl p-6 space-y-5"
       >
-        <div className="flex items-start justify-between gap-4 border-b border-slate-800 pb-4">
+        <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
           <div className="space-y-1">
             <div className="font-mono-tech text-xs tracking-widest text-cyan-400 uppercase">
               Game Menu · Paused
@@ -73,19 +73,19 @@ export function GameMenuModal() {
 
         {/* Live Session Summary */}
         <div className="grid grid-cols-3 gap-2 text-center">
-          <div className="rounded-xl border border-slate-800 bg-slate-900/70 py-2 px-2">
+          <div className="rounded-xl border border-white/10 bg-neutral-950/60 backdrop-blur-md py-2 px-2">
             <div className="font-mono-tech text-[10px] text-slate-400 uppercase">Checkpoints</div>
             <div className="font-display text-sm font-bold text-white tabular-nums">
               {checkpointsCleared.length}/6
             </div>
           </div>
-          <div className="rounded-xl border border-slate-800 bg-slate-900/70 py-2 px-2">
+          <div className="rounded-xl border border-white/10 bg-neutral-950/60 backdrop-blur-md py-2 px-2">
             <div className="font-mono-tech text-[10px] text-slate-400 uppercase">Crystals</div>
             <div className="font-display text-sm font-bold text-cyan-300 tabular-nums">
               {collectedCrystals.length}/12
             </div>
           </div>
-          <div className="rounded-xl border border-slate-800 bg-slate-900/70 py-2 px-2">
+          <div className="rounded-xl border border-white/10 bg-neutral-950/60 backdrop-blur-md py-2 px-2">
             <div className="font-mono-tech text-[10px] text-slate-400 uppercase">Secrets</div>
             <div className="font-display text-sm font-bold text-amber-300 tabular-nums">
               {discoveredEggs.length}/3
@@ -132,7 +132,7 @@ export function GameMenuModal() {
           </button>
 
           {/* Inline Sound Mute + Volume Control */}
-          <div className="rounded-xl border border-slate-800 bg-slate-900/75 p-3 space-y-2.5">
+          <div className="rounded-xl border border-white/10 bg-neutral-950/60 backdrop-blur-md p-3 space-y-2.5">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2 text-sm font-medium text-slate-200">
                 {settings.soundEnabled ? (
@@ -151,7 +151,7 @@ export function GameMenuModal() {
                 className={`rounded-lg px-3 py-1 text-xs font-semibold transition-colors ${
                   settings.soundEnabled
                     ? 'bg-cyan-400 text-slate-950'
-                    : 'bg-slate-800 text-slate-400'
+                    : 'bg-neutral-900 border border-white/10 text-slate-400'
                 }`}
               >
                 {settings.soundEnabled ? 'On' : 'Muted'}

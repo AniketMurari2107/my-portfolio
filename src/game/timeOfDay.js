@@ -13,7 +13,6 @@ export const TIME_PRESETS = [
   { id: 'dawn', label: 'Dawn', t: 0.27 },
   { id: 'day', label: 'Day', t: 0.48 },
   { id: 'dusk', label: 'Dusk', t: 0.74 },
-  { id: 'night', label: 'Night', t: 0.94 },
 ];
 
 // Keyframe palette anchors around the 24-hour cycle

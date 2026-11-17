@@ -37,13 +37,13 @@ export function Projects({ onCloseAndDrive }) {
               onClick={() => setSelectedId(project.id)}
               className={`flex flex-col justify-between overflow-hidden rounded-xl border transition-colors cursor-pointer ${
                 isSelected
-                  ? 'border-violet-400/75 bg-slate-900/90'
-                  : 'border-slate-800 bg-slate-950/80 hover:border-slate-700'
+                  ? 'border-violet-400/80 bg-neutral-900/80 backdrop-blur-md shadow-[0_0_24px_rgba(139,92,246,0.25)]'
+                  : 'border-white/10 bg-neutral-950/60 backdrop-blur-md hover:border-white/20'
               }`}
             >
               <div>
                 {/* Project Image */}
-                <div className="aspect-video w-full overflow-hidden border-b border-slate-800 bg-[#050814]">
+                <div className="aspect-video w-full overflow-hidden border-b border-white/10 bg-[#050814]">
                   <img
                     src={project.image}
                     alt={`${project.name} preview`}
@@ -72,7 +72,7 @@ export function Projects({ onCloseAndDrive }) {
                     {project.technology.map((tech) => (
                       <span
                         key={tech}
-                        className="rounded-md border border-slate-700/80 bg-slate-900 px-2 py-0.5 text-[10px] font-mono-tech text-cyan-300"
+                        className="rounded-md border border-white/10 bg-neutral-900/80 px-2 py-0.5 text-[10px] font-mono-tech text-cyan-300"
                       >
                         {tech}
                       </span>
@@ -82,14 +82,14 @@ export function Projects({ onCloseAndDrive }) {
               </div>
 
               {/* Configurable GitHub & Live Demo Links */}
-              <div className="flex items-center gap-2 border-t border-slate-800/80 bg-slate-950/60 p-3">
+              <div className="flex items-center gap-2 border-t border-white/10 bg-neutral-950/40 backdrop-blur-md p-3">
                 {project.githubUrl ? (
                   <a
                     href={project.githubUrl}
                     target="_blank"
                     rel="noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-cyan-400/60 transition-colors"
+                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-white/10 bg-neutral-900/60 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-white/20 transition-colors"
                   >
                     <Code2 className="h-3.5 w-3.5" />
                     <span>GitHub</span>
@@ -97,7 +97,7 @@ export function Projects({ onCloseAndDrive }) {
                 ) : (
                   <span
                     title="Configure githubUrl in src/data/portfolioData.js"
-                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 text-[11px] text-slate-500"
+                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-white/5 bg-neutral-950/40 px-2.5 py-1.5 text-[11px] text-slate-500"
                   >
                     <Code2 className="h-3.5 w-3.5" />
                     <span>GitHub Link</span>
@@ -118,7 +118,7 @@ export function Projects({ onCloseAndDrive }) {
                 ) : (
                   <span
                     title="Configure liveUrl in src/data/portfolioData.js"
-                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1.5 text-[11px] text-slate-500"
+                    className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-white/5 bg-neutral-950/40 px-2.5 py-1.5 text-[11px] text-slate-500"
                   >
                     <ExternalLink className="h-3.5 w-3.5" />
                     <span>Demo Link</span>
