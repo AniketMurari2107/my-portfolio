@@ -41,9 +41,7 @@ canvas {
   font-variant-numeric: tabular-nums;
 }
 
-/* 1. Dark Glassmorphism:
-   Semi-transparent dark background (bg-neutral-950/60),
-   backdrop-blur-md, and 1px thin frosted border (border-white/10) */
+
 .hud-surface {
   background-color: rgba(10, 10, 10, 0.60);
   backdrop-filter: blur(12px);

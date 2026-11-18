@@ -139,9 +139,7 @@ export function GameHUD() {
         {/* Top-Left Brand + Direct Section Bar + Collectibles/Checkpoints Counters */}
         <div className="flex flex-col gap-1.5 sm:gap-2 pointer-events-auto">
           <div className="hud-surface rounded-xl px-2.5 py-2 sm:px-4 sm:py-2.5 flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-4">
-            <span className="font-display text-[11px] sm:text-base font-bold tracking-wider text-slate-50 whitespace-nowrap">
-              ANIKET // PORTFOLIO
-            </span>
+            
 
             {/* Live Gameplay Counters */}
             <div className="flex items-center gap-2 sm:gap-2.5 sm:border-l sm:border-slate-700/80 sm:pl-3 font-mono-tech text-[10px] sm:text-[11px]">
@@ -336,7 +334,7 @@ export function GameHUD() {
               </div>
             </div>
             <span className="rounded-md bg-cyan-400/15 border border-cyan-400/40 px-2.5 py-0.5 sm:py-1 text-[10px] sm:text-[11px] font-mono-tech font-semibold text-cyan-300 whitespace-nowrap">
-              {touchVisible ? 'TAP TO INTERACT' : 'PRESS E TO INTERACT'}
+              {touchVisible ? 'TAP TO OPEN' : 'PRESS E TO OPEN'}
             </span>
           </button>
         </div>
@@ -387,7 +385,7 @@ export function GameHUD() {
               <span className="text-slate-600" aria-hidden="true">|</span>
               <span>Shift: Nitro</span>
               <span className="text-slate-600" aria-hidden="true">|</span>
-              <span>E: Interact</span>
+              <span>E: Open Portfolio</span>
               <span className="text-slate-600" aria-hidden="true">|</span>
               <span>R: Reset</span>
               <span className="text-slate-600" aria-hidden="true">|</span>

@@ -127,17 +127,17 @@ export function LoadingScreen() {
 
           <div className="space-y-1.5">
             <h1 className="font-display text-4xl sm:text-5xl font-extrabold tracking-[0.14em] text-white">
-              ANIKET
+              
             </h1>
             <p className="font-display text-xs font-semibold tracking-[0.3em] text-cyan-300 uppercase">
-              3D Developer Portfolio
+              
             </p>
           </div>
         </div>
 
         {/* Short Welcome Message */}
         <p className="gs-load-item text-sm text-slate-300 leading-relaxed max-w-sm mx-auto">
-          Welcome to my digital universe. Preparing the 3D circuit, hypercar dynamics, and interactive portfolio zones.
+          
         </p>
 
         {/* Glass Progress Bar Container */}
@@ -150,7 +150,7 @@ export function LoadingScreen() {
           </div>
 
           <div className="flex items-center justify-between text-xs text-slate-300 font-mono-tech tabular-nums">
-            <span>Loading 3D Environment</span>
+            <span>Loading  Environment</span>
             <span className="text-cyan-300 font-semibold">{displayProgress}%</span>
           </div>
         </div>

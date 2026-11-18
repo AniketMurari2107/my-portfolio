@@ -1,15 +1,14 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { RotateCcw, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useGameStore } from '../store/gameStore.js';
-import { PORTFOLIO_ZONES } from '../game/worldZones.js';
 import { GRAPHICS_PRESETS } from '../game/graphicsConfig.js';
 import { formatClockTime, getTimePhaseLabel, TIME_PRESETS } from '../game/timeOfDay.js';
 import { audioEngine } from '../game/audioEngine.js';
 
 /**
  * Functional Settings drawer/modal allowing live adjustments to audio,
- * graphics quality, time of day, camera FOV, steering sensitivity, HUD visibility, and quick teleport.
+ * graphics quality, time of day, camera FOV, steering sensitivity, and HUD visibility.
  */
 export function SettingsPanel() {
   const settingsOpen = useGameStore((s) => s.settingsOpen);
@@ -20,9 +19,6 @@ export function SettingsPanel() {
   const updateSettings = useGameStore((s) => s.updateSettings);
   const setTimeOfDay = useGameStore((s) => s.setTimeOfDay);
   const toggleAutoTimeCycle = useGameStore((s) => s.toggleAutoTimeCycle);
-  const resetCar = useGameStore((s) => s.resetCar);
-  const requestCameraReset = useGameStore((s) => s.requestCameraReset);
-  const teleportToZone = useGameStore((s) => s.teleportToZone);
 
   const panelRef = useRef(null);
 
@@ -328,51 +324,6 @@ export function SettingsPanel() {
             >
               Controls Bar: {settings.showControlsHint ? 'Shown' : 'Hidden'}
             </button>
-          </div>
-
-          {/* Quick Warp & Vehicle Reset */}
-          <div className="space-y-2.5 border-t border-white/10 pt-4">
-            <div className="text-xs font-medium text-slate-400 uppercase tracking-wider">
-              Quick Teleport &amp; Recovery
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {PORTFOLIO_ZONES.map((zone) => (
-                <button
-                  key={zone.id}
-                  type="button"
-                  onClick={() => {
-                    audioEngine.playButtonClick();
-                    teleportToZone(zone.id);
-                  }}
-                  className="rounded-lg border border-white/10 bg-neutral-900/60 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-white/20 transition-colors"
-                >
-                  {zone.shortLabel}
-                </button>
-              ))}
-              <button
-                type="button"
-                onClick={() => {
-                  audioEngine.playButtonClick();
-                  resetCar();
-                }}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-neutral-900/60 px-3 py-1.5 text-xs font-semibold text-cyan-300 hover:border-white/20 transition-colors"
-              >
-                <RotateCcw className="h-3.5 w-3.5" />
-                Reset Car
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  audioEngine.playButtonClick();
-                  requestCameraReset();
-                  toggleSettings();
-                }}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-neutral-900/60 px-3 py-1.5 text-xs font-semibold text-blue-300 hover:border-white/20 transition-colors"
-              >
-                <RotateCcw className="h-3.5 w-3.5" />
-                Reset Camera
-              </button>
-            </div>
           </div>
         </div>
       </div>

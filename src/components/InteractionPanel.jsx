@@ -82,7 +82,6 @@ export function InteractionPanel() {
   };
 
   const isFromMenu = gamePhase === 'menu';
-  const currentZone = PORTFOLIO_ZONES.find((z) => z.id === activeSection);
 
   return (
     <div
@@ -95,19 +94,33 @@ export function InteractionPanel() {
         ref={panelRef}
         className="panel-surface flex w-full max-w-4xl flex-col rounded-2xl max-h-[90vh] overflow-hidden"
       >
-        {/* Active Zone Header & Close Button */}
-        <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-neutral-950/40 backdrop-blur-md px-4 py-3 sm:px-6 shrink-0">
-          <div className="flex items-center gap-2.5">
-            <span
-              className="h-2.5 w-2.5 rounded-full animate-pulse"
-              style={{ backgroundColor: currentZone?.color || '#06b6d4' }}
-            />
-            <h2 className="font-display text-sm sm:text-base font-bold tracking-wide text-white uppercase">
-              {currentZone?.title || activeSection}
-            </h2>
-            <span className="hidden sm:inline-block rounded-md border border-white/10 bg-neutral-900/60 px-2 py-0.5 font-mono-tech text-[10px] text-cyan-300 uppercase">
-              {currentZone?.shortLabel || 'Zone'} Module
-            </span>
+        {/* Top 6-Section Switcher Bar & Close Button */}
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 bg-neutral-950/70 backdrop-blur-md px-4 py-3 sm:px-6 shrink-0">
+          <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto py-0.5 custom-scrollbar">
+            {PORTFOLIO_ZONES.map((zone) => {
+              const active = zone.id === activeSection;
+              return (
+                <button
+                  key={zone.id}
+                  type="button"
+                  onClick={() => {
+                    audioEngine.playButtonClick();
+                    openSection(zone.id);
+                  }}
+                  className={`rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${
+                    active
+                      ? 'bg-cyan-400 text-slate-950 font-bold shadow-[0_0_12px_rgba(6,182,212,0.45)]'
+                      : 'border border-white/10 bg-neutral-900/60 text-slate-300 hover:text-white hover:border-white/20 hover:bg-neutral-900/90'
+                  }`}
+                >
+                  <span
+                    className="h-2 w-2 rounded-full shrink-0"
+                    style={{ backgroundColor: zone.color }}
+                  />
+                  <span>{zone.shortLabel}</span>
+                </button>
+              );
+            })}
           </div>
 
           <div className="flex items-center gap-2">

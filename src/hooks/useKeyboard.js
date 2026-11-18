@@ -81,17 +81,15 @@ export function useKeyboard() {
         return;
       }
 
-      // Interact with nearby zone
+      // Interact with nearby zone or open portfolio modal
       if (event.code === 'KeyE' && !event.repeat && state.gamePhase === 'playing') {
         if (state.activeSection) {
           state.closeSection();
           return;
         }
-        if (state.nearbyZone) {
-          audioEngine.playInteract();
-          state.openSection(state.nearbyZone.id);
-          return;
-        }
+        audioEngine.playInteract();
+        state.openSection(state.nearbyZone ? state.nearbyZone.id : 'about');
+        return;
       }
 
       switch (event.code) {
