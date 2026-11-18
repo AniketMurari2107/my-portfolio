@@ -60,7 +60,7 @@ export function GameMenuModal() {
               Game Menu · Paused
             </div>
             <h2 className="font-display text-2xl font-bold text-white">
-              ANIKET PORTFOLIO
+              
             </h2>
           </div>
           <div className="text-right">
